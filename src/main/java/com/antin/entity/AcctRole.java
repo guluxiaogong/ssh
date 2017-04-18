@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 
 /**
  * Created by Administrator on 2017/4/18.
@@ -14,7 +15,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "acct_role", catalog = "ssh")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class AcctRole {
+public class AcctRole /*implements Serializable*/ {
+    //private static final long serialVersionUID = 1;
     private String id;
     private String name;
 

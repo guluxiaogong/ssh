@@ -3,6 +3,7 @@ package com.antin.entity;
 /**
  * Created by Administrator on 2017/4/18.
  */
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -29,7 +30,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Entity
 @Table(name = "acct_user", catalog = "ssh")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class AcctUser implements java.io.Serializable {
+public class AcctUser implements Serializable {
 
     /**
      *

@@ -10,9 +10,12 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spring.version>4.1.4.RELEASE</spring.version>
+        <spring.version>4.1.9.RELEASE</spring.version>
         <hibernate.version>4.3.8.Final</hibernate.version>
         <jackson.version>2.5.0</jackson.version>
+        <!-- log4j日志文件管理包版本 -->
+        <slf4j.version>1.7.7</slf4j.version>
+        <log4j.version>1.2.17</log4j.version>
     </properties>
 
     <dependencies>
@@ -33,7 +36,20 @@
 
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>spring-beans</artifactId>
+            <artifactId>spring-web</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <!-- 使用SpringMVC需配置 -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
             <version>${spring.version}</version>
         </dependency>
 
@@ -45,27 +61,14 @@
 
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>spring-tx</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-web</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
             <version>${spring.version}</version>
             <scope>test</scope>
         </dependency>
 
-        <!-- 使用SpringMVC需配置 -->
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>spring-webmvc</artifactId>
+            <artifactId>spring-beans</artifactId>
             <version>${spring.version}</version>
         </dependency>
 
@@ -96,11 +99,28 @@
             <version>2.9.0</version>
         </dependency>
 
+        <!--校验hibernate-validator-->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>5.1.2.Final</version>
+        </dependency>
+
         <!-- log4j -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
-            <version>1.2.17</version>
+            <version>${log4j.version}</version>
         </dependency>
 
         <!-- mysql连接 -->
@@ -111,10 +131,17 @@
         </dependency>
 
         <!-- c3p0数据源 -->
+        <!--      <dependency>
+                  <groupId>com.mchange</groupId>
+                  <artifactId>c3p0</artifactId>
+                  <version>0.9.5-pre10</version>
+              </dependency>-->
+
+        <!-- druid -->
         <dependency>
-            <groupId>com.mchange</groupId>
-            <artifactId>c3p0</artifactId>
-            <version>0.9.5-pre10</version>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>0.2.9</version>
         </dependency>
 
         <!-- json -->
@@ -152,8 +179,8 @@
         <!-- servlet -->
         <dependency>
             <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-            <version>3.0-alpha-1</version>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
             <scope>provided</scope>
         </dependency>
 
@@ -163,6 +190,22 @@
             <version>1.2</version>
         </dependency>
 
+        <!-- 上传组件包 -->
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>1.3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.4</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.9</version>
+        </dependency>
     </dependencies>
 
 
@@ -214,21 +257,31 @@
             </plugin>
 
             <!-- 部署至本机 -->
-            <plugin>
-                <groupId>org.codehaus.cargo</groupId>
-                <artifactId>cargo-maven2-plugin</artifactId>
-                <version>1.0</version>
-                <configuration>
-                    <container>
-                        <containerId>tomcat6x</containerId>
-                        <home>D:\WebServer\apache-tomcat-6.0.39</home>
-                    </container>
-                    <configuration>
-                        <type>existing</type>
-                        <home>D:\WebServer\apache-tomcat-6.0.39</home>
-                    </configuration>
-                </configuration>
-            </plugin>
+            <!--           <plugin>
+                           <groupId>org.codehaus.cargo</groupId>
+                           <artifactId>cargo-maven2-plugin</artifactId>
+                           <version>1.0</version>
+                           <configuration>
+                               <container>
+                                   <containerId>tomcat6x</containerId>
+                                   <home>D:\WebServer\apache-tomcat-6.0.39</home>
+                               </container>
+                               <configuration>
+                                   <type>existing</type>
+                                   <home>D:\WebServer\apache-tomcat-6.0.39</home>
+                               </configuration>
+                           </configuration>
+                       </plugin>-->
         </plugins>
     </build>
+    <distributionManagement>
+        <repository>
+            <id>ssh-release</id>
+            <url>http://192.168.1.59:8081/nexus/content/repositories/releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>ssh-snapshot</id>
+            <url>http://192.168.1.59:8081/nexus/content/repositories/snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
 </project>

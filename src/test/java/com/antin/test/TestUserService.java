@@ -31,7 +31,7 @@ public class TestUserService {
     public void save() {
         AcctUser acctUser = new AcctUser();
         acctUser.setId(UUID.randomUUID().toString());
-        acctUser.setNickName("andy");
+        acctUser.setNickName("admin");
         acctUser.setRegisterTime(new Date());
         acctUser.setTelephone("13022221111");
         String id = userService.save(acctUser);

@@ -29,7 +29,7 @@ public class UserController {
         LOGGER.info("查询用户：" + userId);
         AcctUser userInfo = userService.load(userId);
         modelMap.addAttribute("userInfo", userInfo);
-        return "/user/showInfo";
+        return "/views/user/showInfo";
     }
 
     @RequestMapping("/showInfos")
