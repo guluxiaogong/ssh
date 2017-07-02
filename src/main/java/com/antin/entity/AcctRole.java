@@ -13,7 +13,7 @@ import java.io.Serializable;
  * Created by Administrator on 2017/4/18.
  */
 @Entity
-@Table(name = "acct_role", catalog = "ssh")
+@Table(name = "acct_role"/*, catalog = "ssh"*/)
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class AcctRole /*implements Serializable*/ {
     //private static final long serialVersionUID = 1;
